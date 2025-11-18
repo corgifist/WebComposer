@@ -10,3 +10,4 @@ set(WebComposer_Headers
 
 add_library(WebComposer ${WebComposer_Sources} ${WebComposer_Headers})
 target_include_directories(WebComposer PUBLIC .)
+target_compile_definitions(WebComposer PUBLIC WEBCOMPOSER_TEST_ENABLED=1)
