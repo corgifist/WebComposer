@@ -7,5 +7,5 @@
 #include <iostream>
 #include <vector>
 #include <string>
-
-#define WEBCOMPOSER_NAMESPACE WebComposerNamespace
+#include <string_view>
+#include <memory>
