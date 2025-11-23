@@ -5,7 +5,7 @@
 #include <string_view>
 #include <tidy/tidyenum.h>
 
-namespace WebComposer {
+#define INTERNAL(PTR) ((HTMLTidyInternalData*) (PTR))
 
 struct HTMLTidyInternalData {
     TidyDoc doc;
@@ -17,8 +17,7 @@ struct HTMLTidyInternalData {
         this->err = { 0 };
     }
 };
-
-#define INTERNAL(PTR) ((HTMLTidyInternalData*) (PTR))
+namespace WebComposer {
 
 HTMLTidy::HTMLTidy() : m_data(new HTMLTidyInternalData()) {
     // We don't want libtidy-html5 to clutter our HTML files

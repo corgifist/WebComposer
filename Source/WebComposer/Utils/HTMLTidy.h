@@ -32,8 +32,9 @@ public:
 
     template<typename ...Args>
     static inline Ptr New(Args &&...args) {
-        return std::unique_ptr<HTMLTidy, ReleasableDeleter>(
-            new HTMLTidy(std::forward<Args>(args)...), ReleasableDeleter::Get()
+        return Ptr(
+            new HTMLTidy(std::forward<Args>(args)...),
+            ReleasableDeleter::Get()
         );
     }
 
