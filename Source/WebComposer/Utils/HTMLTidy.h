@@ -1,21 +1,41 @@
 #pragma once
 
 #include "Common.h"
-#include <memory>
+#include "Releasable.h"
+#include "Utils/Releasable.h"
 
 namespace WebComposer {
 
-class HTMLTidy {
+class HTMLTidy : public IReleasable {
 public:
+    enum class Flags {
+        None = 0, // Empty flag.
+        XHTMLOut, // Convert HTML to XHTML.
+        HTMLOut, // Convert XHTML to HTML.
+        ForceOutput // Return some result from GetOutput() even if converting failed.
+    };
+    
     HTMLTidy();
-    ~HTMLTidy();
-
-    HTMLTidy operator=(const HTMLTidy& tidy) = delete;
-
-    bool Parse(const std::string &input);
+    
+    bool Parse(std::string_view input);
+    bool Tidy();
+    bool RunDiagnostics();
+    bool SetFlag(Flags flag, bool value);
 
     std::string GetOutput();
     std::string GetErrorOutput();
+
+    // Release all internal structures.
+    void Release() override;
+
+    using Ptr = std::unique_ptr<HTMLTidy, ReleasableDeleter>;
+
+    template<typename ...Args>
+    static inline Ptr New(Args &&...args) {
+        return std::unique_ptr<HTMLTidy, ReleasableDeleter>(
+            new HTMLTidy(std::forward<Args>(args)...), ReleasableDeleter::Get()
+        );
+    }
 
 private:
     // Pointer to the internal structures of HTMLTidy.
@@ -24,6 +44,6 @@ private:
     void *m_data;
 };
 
-using HTMLTidyPtr = std::unique_ptr<HTMLTidy>;
+using HTMLTidyPtr = HTMLTidy::Ptr;
 
 } // namespace WebComposer

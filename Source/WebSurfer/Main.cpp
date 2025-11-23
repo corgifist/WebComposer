@@ -1,9 +1,12 @@
-#include <iostream>
-#include "Greet.h"
+#define WEBCOMPOSER_LOG_RELEASABLE
 #include "Utils/HTMLTidy.h"
 
-int main(int argc, char **argv) {
-    auto html = WebComposer::HTMLTidy();
-    WebComposer::Greet("WebComposer");
-    return 0;
+using namespace WebComposer;
+
+int main(int argc, char **argv) { 
+    auto html = HTMLTidy::New();
+    html->Parse("<title>Hello, WebComposer<title><p>Hello, World!");
+    html->Tidy();
+    std::cout << html->GetOutput() << std::endl;
+    return 0; 
 }

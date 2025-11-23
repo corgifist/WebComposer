@@ -1,4 +1,4 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
-project(WebComposer LANGUAGES C CXX)
+project(WebComposer)
 
 add_subdirectory(Source)

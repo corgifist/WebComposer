@@ -2,6 +2,8 @@
   "name": "webcomposer",
   "version": "0.0.1",
   "dependencies": [
-    "tidy-html5"
+    "expat",
+    "tidy-html5",
+    "fmt"
   ]
 }
